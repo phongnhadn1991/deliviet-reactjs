@@ -47,11 +47,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 ## Install More
-npm init react-app deliviet
-npx create-react-app deliviet --template redux
-npm install classnames --save
-npm install autoprefixer --save-dev
-npm install node-sass sass-loader style-loader css-loader --save-dev
+npm init react-app deliviet\
+npx create-react-app deliviet --template redux\
+npm install classnames --save\
+npm install autoprefixer --save-dev\
+npm install node-sass sass-loader style-loader css-loader --save-dev\
 npm install axios
-npm install -D tailwindcss postcss autoprefixer
-npm install react-router-dom
+npm install -D tailwindcss postcss autoprefixer\
+npm install react-router-dom\
