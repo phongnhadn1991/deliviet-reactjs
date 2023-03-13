@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const navigate = useNavigate();
-  const [isLoggedIn] = useState(false);
+  const [isLoggedIn] = useState(true);
 
   useEffect(() => {
     !isLoggedIn ? navigate("/login") : navigate("/")
