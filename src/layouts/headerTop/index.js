@@ -23,7 +23,7 @@ export default function HeaderTop() {
                 </form>
                 <div className="flex ml-auto">
                     <a href="http://" className="flex flex-row items-center">
-                        <img src="http://" alt="" className="h-10 w-10 bg-gray-200 border rounded-full" />
+                        <img src="https://avatars.githubusercontent.com/u/7539878?v=4" alt="" className="h-10 w-10 bg-gray-200 border rounded-full" />
                         <span className="flex flex-col ml-2">
                             <span className="truncate w-20 font-semibold tracking-wide">Ngoan Mc</span>
                             <span className="truncate w-20 text-gray-500 text-xs mt-1">Admin</span>

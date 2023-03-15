@@ -32,12 +32,9 @@ export default function Login() {
                         src="http://deliviet.mcntestsv.ga/wp-content/themes/mcn/assets/images/logo-deliviet.png"
                         alt="logo"
                       />
-                      <h4 className="mt-1 mb-12 pb-1 text-xl font-semibold">
-                        Deliviet
-                      </h4>
+                      <h4 className="mt-1 mb-12 pb-1 text-xl font-semibold">Please login to your account</h4>
                     </div>
                     <form>
-                      <p className="mb-4">Please login to your account</p>
                       <div
                         className="relative mb-4"
                         data-te-input-wrapper-init=""
@@ -114,15 +111,12 @@ export default function Login() {
                   }}
                 >
                   <div className="px-4 py-6 text-white md:mx-6 md:p-12">
-                    <h4 className="mb-6 text-xl font-semibold">
-                      We are more than just a company
-                    </h4>
-                    <p className="text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                    <h2 className="mb-6 text-xl font-semibold uppercase">Login Page</h2>
+                    <div className="text-sm">
+                      <h5 className="mb-2 text-sm font-semibold">Administartor</h5>
+                      <p>Username: quantri</p>
+                      <p>Password: quantri</p>
+                    </div>
                   </div>
                 </div>
               </div>

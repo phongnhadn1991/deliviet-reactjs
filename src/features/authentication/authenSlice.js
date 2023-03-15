@@ -1,43 +1,62 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import http from "../../config/config";
 
+
 const initialState = {
+  isAuthenticated: !localStorage.getItem('access_token') ? false : true,
   profile: {
-    jwt_token: "",
+    jwt_token: null,
+    roles: null,
+    user: null
   },
 };
+
 
 export const fetchTokenLogin = createAsyncThunk(
   "post/fetchTokenLogin",
   async (payload) => {
-    const res = await http.post("/api/v1/token", payload);
-    console.log("token", res.data.jwt_token);
-    return res.data.jwt_token;
+    const res = await http.post('/simple-jwt-login/v1/auth', payload)
+    if (res) {
+      localStorage.setItem('access_token', res.data.data.jwt)
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${res.data.data.jwt}`
+        }
+      }
+      const resData = await http.get('/simple-jwt-login/v1/auth/validate', config)
+      return resData.data.data
+    }
   }
 );
 
 export const authenSlice = createSlice({
   name: "authentication",
   initialState,
-  reducers: {},
+  reducers: {
+    logOutUser: (state, action) => {
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('profile_user')
+      state.isAuthenticated = false
+      state.profile = {}
+    }
+  },
   extraReducers: (builer) => {
     builer
-      // .addCase(fetchTokenLogin.pending, (state, action) => {
-      //     state.isLoading = true
-      // })
-      // .addCase(fetchTokenLogin.rejected, (state, action) => {
-      //     state.isLoading = false
-      // })
       .addCase(fetchTokenLogin.fulfilled, (state, action) => {
-        state.profile.jwt_token = action.payload;
-        // state.isLoading = false
+        if (action.payload) {
+          state.isAuthenticated = true
+          state.profile.jwt_token = action.payload.jwt
+          state.profile.roles = action.payload.roles
+          state.profile.user = action.payload.user
+          localStorage.setItem('profile_user', JSON.stringify(state.profile))
+        }
       });
   },
 });
 
-// export const { } = productSlice.actions;
+export const { logOutUser } = authenSlice.actions;
 
 // Selector
-export const selectListPost = (state) => state.post.posts.listPost;
+export const isAuthenticated = (state) => state.authen.isAuthenticated;
 
 export default authenSlice.reducer;

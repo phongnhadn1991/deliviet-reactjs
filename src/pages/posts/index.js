@@ -63,9 +63,11 @@ export const ItemPost = ({ item }) => {
                 </div>
             </td>
             <td className="py-3 px-6 text-left">
-                <div className="flex items-center">
-                    <img className="w-10 h-10 rounded" src={_embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url} alt='' />
-                </div>
+                {_embedded["wp:featuredmedia"] && (
+                    <div className="flex items-center">
+                        <img className="w-10 h-10 rounded" src={_embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url} alt='' />
+                    </div>
+                )}
             </td>
             <td className="py-3 px-6 text-left whitespace-nowrap">
                 <div className="flex items-center">
