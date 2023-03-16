@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getProfileFromLS } from "../../features/authentication/authenSlice";
 import { fetchDataPost, selectListPost } from "../../features/post/postSlice";
 
 export default function PostPage() {
   const listPost = useSelector(selectListPost);
   const isLoadingSkeleton = useSelector((state) => state.post.isLoading);
   const dispatch = useDispatch();
-  const profileUser = JSON.parse(localStorage.getItem("profile_user"));
+  const profileUser = getProfileFromLS();
   const { id } = profileUser;
 
   useEffect(() => {

@@ -1,27 +1,31 @@
 import axios from "axios";
 
-const JWT_TOKENT = localStorage.getItem("access_token")
-  ? localStorage.getItem("access_token")
-  : "";
+const http = axios.create({
+  baseURL: "http://localhost/wp-json/",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
-// const config = {
-//   "Content-Type": "application/json",
-//   Authorization: `Bearer ${JWT_TOKENT}`,
-// };
-
-const checkToken = (payload) => {
-  if (payload) {
-    return {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${payload}`,
-    };
+// Hàm lấy token từ localStorage
+export const getAccessTokenFromLS = async () => {
+  try {
+    const token = await localStorage.getItem("access_token");
+    return token;
+  } catch (error) {
+    console.log(error);
+    return "";
   }
 };
 
-const http = axios.create({
-  baseURL: "http://localhost/wp-json/",
-  headers: checkToken(JWT_TOKENT),
-});
+const updateToken = (token) => {
+  http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
+getAccessTokenFromLS().then((token) => {
+  if (token) {
+    updateToken(token);
+  }
+});
 
 export default http;
