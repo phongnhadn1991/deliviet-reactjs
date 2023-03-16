@@ -8,7 +8,7 @@ import PostPage from "../pages/posts"
 import CategoryPost from "../pages/posts/category"
 
 const RouterPage = () => {
-    
+
     const isAuthenticated = useSelector(state => state.authen.isAuthenticated)
 
     const ProtectedRoute = () => {

@@ -1,30 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import http from "../../config/config";
-
+import { http } from "../../config/config";
 
 const initialState = {
   isAuthenticated: !localStorage.getItem('access_token') ? false : true,
-  profile: {
-    jwt_token: null,
-    roles: null,
-    user: null
-  },
+  profile: {},
 };
-
 
 export const fetchTokenLogin = createAsyncThunk(
   "post/fetchTokenLogin",
   async (payload) => {
-    const res = await http.post('/simple-jwt-login/v1/auth', payload)
+    const res = await http.post("/api/v1/token", payload);
     if (res) {
-      localStorage.setItem('access_token', res.data.data.jwt)
+      localStorage.setItem("access_token", res.data.jwt_token);
       const config = {
         headers: {
-          'Authorization': `Bearer ${res.data.data.jwt}`
-        }
-      }
-      const resData = await http.get('/simple-jwt-login/v1/auth/validate', config)
-      return resData.data.data
+          Authorization: `Bearer ${res.data.jwt_token}`,
+        },
+      };
+      const resData = await http.get("/api/v1/token-validate", config);
+      return resData.data;
     }
   }
 );
@@ -34,23 +28,22 @@ export const authenSlice = createSlice({
   initialState,
   reducers: {
     logOutUser: (state, action) => {
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('profile_user')
-      state.isAuthenticated = false
-      state.profile = {}
-    }
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("profile_user");
+      state.isAuthenticated = false;
+      state.profile = {};
+    },
   },
   extraReducers: (builer) => {
-    builer
-      .addCase(fetchTokenLogin.fulfilled, (state, action) => {
-        if (action.payload) {
-          state.isAuthenticated = true
-          state.profile.jwt_token = action.payload.jwt
-          state.profile.roles = action.payload.roles
-          state.profile.user = action.payload.user
-          localStorage.setItem('profile_user', JSON.stringify(state.profile))
-        }
-      });
+    builer.addCase(fetchTokenLogin.fulfilled, (state, action) => {
+      console.log(state.isAuthenticated);
+      console.log(action.payload);
+      if (action.payload) {
+        state.isAuthenticated = true;
+        state.profile = action.payload;
+        localStorage.setItem("profile_user", JSON.stringify(state.profile));
+      }
+    });
   },
 });
 
