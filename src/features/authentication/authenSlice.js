@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { http } from "../../config/config";
+import http from "../../config/config";
 
 const initialState = {
-  isAuthenticated: !localStorage.getItem('access_token') ? false : true,
+  isAuthenticated: !localStorage.getItem("access_token") ? false : true,
   profile: {},
 };
 
@@ -12,12 +12,7 @@ export const fetchTokenLogin = createAsyncThunk(
     const res = await http.post("/api/v1/token", payload);
     if (res) {
       localStorage.setItem("access_token", res.data.jwt_token);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${res.data.jwt_token}`,
-        },
-      };
-      const resData = await http.get("/api/v1/token-validate", config);
+      const resData = await http.get("/wp/v2/users/me");
       return resData.data;
     }
   }
@@ -36,8 +31,6 @@ export const authenSlice = createSlice({
   },
   extraReducers: (builer) => {
     builer.addCase(fetchTokenLogin.fulfilled, (state, action) => {
-      console.log(state.isAuthenticated);
-      console.log(action.payload);
       if (action.payload) {
         state.isAuthenticated = true;
         state.profile = action.payload;
