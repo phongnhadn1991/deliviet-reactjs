@@ -61,7 +61,7 @@ export const authenSlice = createSlice({
         setAccessTokenToLS(jwt_token)
 
         http.get("/wp/v2/users/me")
-          .then((res) => setProfileToLS(res.data))
+          .then((res) => setProfileToLS(res))
           .catch(error => console.log(error))
           state.isAuthenticated = true
       })

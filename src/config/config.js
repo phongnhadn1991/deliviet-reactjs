@@ -7,25 +7,31 @@ const http = axios.create({
   }
 });
 
-// Hàm lấy token từ localStorage
-export const getAccessTokenFromLS = async () => {
-  try {
-    const token = await localStorage.getItem("access_token");
-    return token;
-  } catch (error) {
-    console.log(error);
-    return "";
-  }
-};
+// Request interceptor for API calls
+http.interceptors.request.use(
+  async config => {
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      'Accept': 'application/json',
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error)
+  });
 
-const updateToken = (token) => {
-  http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
-getAccessTokenFromLS().then((token) => {
-  if (token) {
-    updateToken(token);
+// Response interceptor for API calls
+http.interceptors.response.use((response) => {
+  return response
+}, async function (error) {
+  const originalRequest = error.config;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    originalRequest._retry = true;
+    const access_token = localStorage.getItem("access_token");
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+    return http(originalRequest);
   }
+  return Promise.reject(error);
 });
 
 export default http;
