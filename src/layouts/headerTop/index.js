@@ -1,7 +1,3 @@
-import React from 'react'
-
-// const profileUser = localStorage.getItem("profile_user") ? JSON.parse(localStorage.getItem("profile_user")) : '';
-
 export default function HeaderTop() {
     return (
         <header className="header bg-white shadow py-4 px-8">
@@ -23,15 +19,15 @@ export default function HeaderTop() {
                         </a>
                     </div>
                 </form>
-                {/* <div className="flex ml-auto">
+                <div className="flex ml-auto">
                     <a href="http://" className="flex flex-row items-center">
-                        <img src={profileUser ? profileUser.avatar_urls[48] : ''} alt="" className="h-10 w-10 bg-gray-200 border rounded-full" />
+                        <img src="https://avatars.githubusercontent.com/u/7539878?v=4" alt="" className="h-10 w-10 bg-gray-200 border rounded-full" />
                         <span className="flex flex-col ml-2">
-                            <span className="truncate w-20 font-semibold tracking-wide">{profileUser ? profileUser.name : ''}</span>
+                            <span className="truncate w-20 font-semibold tracking-wide">Ngoan Mc</span>
                             <span className="truncate w-20 text-gray-500 text-xs mt-1">Admin</span>
                         </span>
                     </a>
-                </div> */}
+                </div>
             </div>
         </header>
     )

@@ -1,18 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import http from "../../config/config";
 
+const initialState = {
+  isAuthenticated: !localStorage.getItem("access_token") ? false : true ,
+  profileUser: {},
+};
 
 //  Config LocalStorage
 export const setAccessTokenToLS = (access_token) => {
   localStorage.setItem('access_token', access_token)
 }
+
 export const setProfileToLS = (profile) => {
   localStorage.setItem('profile_user', JSON.stringify(profile))
 }
 
-export const getAccessTokenFromLS = async () => {
+export const getAccessTokenFromLS = () => {
   try {
-    const token = await localStorage.getItem("access_token");
+    const token = localStorage.getItem("access_token");
     return token;
   } catch (error) {
     console.log(error);
@@ -29,12 +34,6 @@ export const clearLS = () => {
   localStorage.removeItem("profile_user");
 }
 
-
-const initialState = {
-  isAuthenticated: false,
-  profile: {},
-};
-
 export const fetchTokenLogin = createAsyncThunk(
   "post/fetchTokenLogin",
   async (payload) => {
@@ -43,14 +42,13 @@ export const fetchTokenLogin = createAsyncThunk(
   }
 );
 
-
 export const authenSlice = createSlice({
   name: "authentication",
   initialState,
   reducers: {
     logOutUser: (state, action) => {
       state.isAuthenticated = false;
-      state.profile = {};
+      state.profileUser = {};
       clearLS()
     },
   },
@@ -61,9 +59,10 @@ export const authenSlice = createSlice({
         setAccessTokenToLS(jwt_token)
 
         http.get("/wp/v2/users/me")
-          .then((res) => setProfileToLS(res))
+          .then((res) => setProfileToLS(res.data))
           .catch(error => console.log(error))
-          state.isAuthenticated = true
+        state.profileUser = getProfileFromLS();
+        state.isAuthenticated = true
       })
   },
 });
