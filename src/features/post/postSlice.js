@@ -19,6 +19,15 @@ export const fetchDataPost = createAsyncThunk(
   }
 );
 
+// DELETE POST
+export const deleteDataPost = createAsyncThunk(
+  "post/deleteDataPost",
+  async (payload) => {
+    const res = await http.delete(`/wp/v2/posts/${payload}`);
+    return res.data;
+  }
+);
+
 export const fetchDataCategory = createAsyncThunk(
   "post/fetchDataCategory",
   async () => {
@@ -53,7 +62,19 @@ export const postSlice = createSlice({
       .addCase(fetchDataCategory.fulfilled, (state, action) => {
         state.category.listCategory = action.payload;
         state.isLoading = false;
-      });
+      })
+
+      // delete post
+      .addCase(deleteDataPost.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteDataPost.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteDataPost.fulfilled, (state, action) => {
+        state.posts.listPost = action.payload;
+        state.isLoading = false
+      })
   },
 });
 
