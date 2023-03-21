@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ItemPost(props) {
   const { id, title, status, _embedded } = props.item;
