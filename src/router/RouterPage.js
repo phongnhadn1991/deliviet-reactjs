@@ -26,6 +26,7 @@ const RouterPage = () => {
                     <Route index element={<Dashboard />} />
                     <Route path='/posts' element={<PostPage />} />
                     <Route path='/posts/category' element={<CategoryPost />} />
+                    <Route path='/users' element={<CategoryPost />} />
                 </Route>
             </Route>
             <Route element={<RejectedRoute />}>

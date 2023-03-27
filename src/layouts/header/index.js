@@ -176,9 +176,12 @@ export default function Header() {
             </span>
           </li>
           <li className="my-px">
-            <a
-              href="http://"
-              className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300"
+            <NavLink
+              to={"/users"}
+              className={({ isActive }) => {
+                const activeClass = isActive ? "bg-gray-100 text-gray-700" : "";
+                return `flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 ${activeClass}`;
+              }}
             >
               <span className="flex items-center justify-center text-lg text-gray-400">
                 <svg
@@ -200,7 +203,7 @@ export default function Header() {
               <span className="flex items-center justify-center text-xs text-red-500 font-semibold bg-red-100 h-6 px-2 rounded-full ml-auto">
                 10
               </span>
-            </a>
+            </NavLink>
           </li>
           <li className="my-px">
             <span

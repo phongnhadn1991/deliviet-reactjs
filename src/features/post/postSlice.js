@@ -28,6 +28,7 @@ export const deleteDataPost = createAsyncThunk(
   }
 );
 
+// CATEGORY - FETCH
 export const fetchDataCategory = createAsyncThunk(
   "post/fetchDataCategory",
   async () => {
@@ -36,6 +37,16 @@ export const fetchDataCategory = createAsyncThunk(
   }
 );
 
+// CATEGORY - DELETE
+export const deleteCategoryByID = createAsyncThunk(
+  "post/deleteCategoryByID",
+  async (payload) => {
+    await http.delete(`/wp/v2/categories/${payload}?force=true`);
+    return payload;
+  }
+);
+
+// CATEGORY - DELETE
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -73,12 +84,23 @@ export const postSlice = createSlice({
       })
       .addCase(deleteDataPost.fulfilled, (state, action) => {
         state.posts.listPost = action.payload;
-        state.isLoading = false
+        state.isLoading = false;
+      });
+
+    builer
+      .addCase(deleteCategoryByID.pending, (state, action) => {
+        state.isLoading = true;
       })
+      .addCase(deleteCategoryByID.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.category.listCategory = state.category.listCategory.filter(
+          (item) => item.id !== action.payload
+        );
+      });
   },
 });
 
-// export const { } = productSlice.actions;
+export const { deleteCateByID } = postSlice.actions;
 
 // Selector
 export const selectListPost = (state) => state.post.posts.listPost;
