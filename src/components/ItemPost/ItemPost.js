@@ -1,28 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 
 export default function ItemPost(props) {
   const { id, title, status, _embedded } = props.item;
-  function handleDelete(valId) {
-    fetch(`http://deliviet.test/wp-json/wp/v2/posts/` + valId, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-  }
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left">
@@ -103,7 +82,6 @@ export default function ItemPost(props) {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              onClick={() => handleDelete(id)}
             >
               <path
                 strokeLinecap="round"

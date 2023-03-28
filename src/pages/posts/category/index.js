@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ItemCate from "../../../components/Category/ItemCate";
@@ -14,7 +15,7 @@ export default function CategoryPost() {
 
   useEffect(() => {
     dispatch(fetchDataCategory());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="main-content flex flex-col flex-grow p-8">

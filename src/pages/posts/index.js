@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileFromLS } from "../../features/authentication/authenSlice";
@@ -14,7 +15,7 @@ export default function PostPage() {
   useEffect(() => {
     dispatch(fetchDataPost(id));
     dispatch(deleteDataPost(id));
-  }, [dispatch, id]);
+  }, []);
 
   return (
     <div className="main-content flex flex-col flex-grow p-8">
