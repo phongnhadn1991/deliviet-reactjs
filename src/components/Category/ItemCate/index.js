@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { deleteCategoryByID } from "../../../features/post/postSlice";
 
 export default function ItemCate(props) {
@@ -27,8 +28,8 @@ export default function ItemCate(props) {
       </td>
       <td className="py-3 px-6 text-center">
         <div className="flex item-center justify-center">
-          <div
-            onClick={() => getValue(id)}
+          <NavLink
+            to={`./${id}`}
             className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
           >
             <svg
@@ -50,8 +51,9 @@ export default function ItemCate(props) {
                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
               />
             </svg>
-          </div>
-          <div
+          </NavLink>
+          <NavLink
+            to={`./${id}`}
             onClick={() => getValue(id)}
             className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
           >
@@ -68,7 +70,7 @@ export default function ItemCate(props) {
                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
               />
             </svg>
-          </div>
+          </NavLink>
           <div
             onClick={() => dispatch(deleteCategoryByID(id))}
             className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
