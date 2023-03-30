@@ -22,9 +22,9 @@ export const fetchDataPost = createAsyncThunk(
 // DELETE POST
 export const deleteDataPost = createAsyncThunk(
   "post/deleteDataPost",
-  async (payload) => {
-    const res = await http.delete(`/wp/v2/posts/${payload}`);
-    return res.data;
+  async (payload, {dispatch}) => {
+    const res = await http.delete(`/wp/v2/posts/${payload}`)
+    await dispatch(fetchDataPost(res.data.author))
   }
 );
 
@@ -82,8 +82,8 @@ export const postSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteDataPost.fulfilled, (state, action) => {
-        state.posts.listPost = action.payload;
-        state.isLoading = false;
+        // state.posts.listPost = action.payload;
+        // state.isLoading = false;
       });
 
     builer

@@ -26,10 +26,14 @@ http.interceptors.response.use((response) => {
 }, async function (error) {
   const originalRequest = error.config;
   if (error.response.status === 401 && !originalRequest._retry) {
+    console.log(error.response)
     originalRequest._retry = true;
     const access_token = localStorage.getItem("access_token");
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
     return http(originalRequest);
+  }
+  else if (error.response.status === 410) {
+    // alert('post not exit')
   }
   return Promise.reject(error);
 });

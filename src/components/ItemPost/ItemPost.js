@@ -1,6 +1,9 @@
 
+import { useDispatch } from "react-redux";
+import { deleteDataPost } from "../../features/post/postSlice";
 
 export default function ItemPost(props) {
+  const dispatch = useDispatch();
   const { id, title, status, _embedded } = props.item;
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
@@ -82,6 +85,7 @@ export default function ItemPost(props) {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              onClick={() => dispatch(deleteDataPost(id))}
             >
               <path
                 strokeLinecap="round"

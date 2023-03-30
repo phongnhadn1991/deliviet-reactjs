@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileFromLS } from "../../features/authentication/authenSlice";
-import { fetchDataPost, selectListPost, deleteDataPost } from "../../features/post/postSlice";
+import { fetchDataPost, selectListPost } from "../../features/post/postSlice";
 import ItemPost from "../../components/ItemPost/ItemPost";
 
 export default function PostPage() {
@@ -14,7 +14,7 @@ export default function PostPage() {
 
   useEffect(() => {
     dispatch(fetchDataPost(id));
-    dispatch(deleteDataPost(id));
+    // dispatch(deleteDataPost(id));
   }, []);
 
   return (
