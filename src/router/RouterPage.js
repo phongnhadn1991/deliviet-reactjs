@@ -7,6 +7,7 @@ import Login from "../pages/authencation/login";
 import Dashboard from "../pages/dashboard"
 import PostPage from "../pages/posts"
 import CategoryPost from "../pages/posts/category"
+import RegisterUser from "../pages/user/RegisterUser"
 
 const RouterPage = () => {
 
@@ -33,6 +34,7 @@ const RouterPage = () => {
             </Route>
             <Route element={<RejectedRoute />}>
                 <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<RegisterUser />} />
             </Route>
         </Routes>
     )
