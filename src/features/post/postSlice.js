@@ -7,6 +7,7 @@ const initialState = {
     listPost: [],
   },
   category: {
+    itemCateogry: '',
     listCategory: [],
   },
 };
@@ -22,9 +23,10 @@ export const fetchDataPost = createAsyncThunk(
 // DELETE POST
 export const deleteDataPost = createAsyncThunk(
   "post/deleteDataPost",
-  async (payload) => {
+  async (payload, { dispatch }) => {
     const res = await http.delete(`/wp/v2/posts/${payload}`);
-    return res.data;
+    dispatch(fetchDataPost(res.data.author));
+    return payload;
   }
 );
 
@@ -40,13 +42,26 @@ export const fetchDataCategory = createAsyncThunk(
 // CATEGORY - DELETE
 export const deleteCategoryByID = createAsyncThunk(
   "post/deleteCategoryByID",
-  async (payload) => {
-    await http.delete(`/wp/v2/categories/${payload}?force=true`);
+  async (payload, { dispatch }) => {
+    await http
+      .delete(`/wp/v2/categories/${payload}?force=true`)
+      .then((resp) => {
+        dispatch(fetchDataCategory(resp.data.author));
+      })
+      .catch((error) => console.log(error));
     return payload;
   }
 );
 
-// CATEGORY - DELETE
+// CATEGORY - GET DETAIL
+export const getCategoryByID = createAsyncThunk(
+  "post/getCategoryByID",
+  async (payload) => {
+    const res = await http.get(`/wp/v2/categories/${payload}`);
+    return res.data;
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -83,8 +98,10 @@ export const postSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteDataPost.fulfilled, (state, action) => {
-        state.posts.listPost = action.payload;
         state.isLoading = false;
+        state.posts.listPost = state.posts.listPost.filter(
+          (item) => item.id !== action.payload
+        );
       });
 
     builer
@@ -97,6 +114,12 @@ export const postSlice = createSlice({
           (item) => item.id !== action.payload
         );
       });
+
+    builer
+      .addCase(getCategoryByID.pending, (state, action) => {})
+      .addCase(getCategoryByID.fulfilled, (state, action) => {
+        state.category.itemCateogry = action.payload
+      });
   },
 });
 
@@ -105,5 +128,6 @@ export const { deleteCateByID } = postSlice.actions;
 // Selector
 export const selectListPost = (state) => state.post.posts.listPost;
 export const selectListCate = (state) => state.post.category.listCategory;
+export const selectItemCate = (state) => state.post.category.itemCateogry
 
 export default postSlice.reducer;

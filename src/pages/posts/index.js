@@ -14,7 +14,6 @@ export default function PostPage() {
 
   useEffect(() => {
     dispatch(fetchDataPost(id));
-    dispatch(deleteDataPost(id));
   }, []);
 
   return (
