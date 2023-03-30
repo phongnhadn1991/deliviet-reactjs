@@ -42,6 +42,7 @@ export const deleteCategoryByID = createAsyncThunk(
   "post/deleteCategoryByID",
   async (payload) => {
     await http.delete(`/wp/v2/categories/${payload}?force=true`);
+    return payload;
   }
 );
 
@@ -87,8 +88,11 @@ export const postSlice = createSlice({
       });
 
     builer
-      .addCase(deleteCategoryByID.pending, (state, action) => {})
+      .addCase(deleteCategoryByID.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(deleteCategoryByID.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.category.listCategory = state.category.listCategory.filter(
           (item) => item.id !== action.payload
         );
