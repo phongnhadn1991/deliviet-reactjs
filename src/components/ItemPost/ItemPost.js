@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import { deleteDataPost } from "../../features/post/postSlice";
 
 export default function ItemPost(props) {
+  const dispatch = useDispatch();
   const { id, title, status, _embedded } = props.item;
-  const dispatch = useDispatch()
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left">
