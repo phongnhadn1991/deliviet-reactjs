@@ -24,8 +24,10 @@ export const fetchDataPost = createAsyncThunk(
 export const deleteDataPost = createAsyncThunk(
   "post/deleteDataPost",
   async (payload, { dispatch }) => {
-    const res = await http.delete(`/wp/v2/posts/${payload}`);
-    await dispatch(fetchDataPost(res.data.author));
+    await http
+      .delete(`/wp/v2/posts/${payload}`)
+      .then(async (res) => await dispatch(fetchDataPost(res.data.author)))
+      .catch((error) => console.log(error));
   }
 );
 
@@ -42,8 +44,10 @@ export const fetchDataCategory = createAsyncThunk(
 export const deleteCategoryByID = createAsyncThunk(
   "post/deleteCategoryByID",
   async (payload, { dispatch }) => {
-    const res = await http.delete(`/wp/v2/categories/${payload}?force=true`);
-    await dispatch(fetchDataCategory(res.data.author));
+    await http
+      .delete(`/wp/v2/categories/${payload}?force=true`)
+      .then(async (res) => await dispatch(fetchDataCategory(res.data.author)))
+      .catch((error) => console.log(error));
   }
 );
 
