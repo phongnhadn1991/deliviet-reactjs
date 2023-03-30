@@ -7,7 +7,7 @@ const initialState = {
     listPost: [],
   },
   category: {
-    itemCateogry: '',
+    itemCateogry: "",
     listCategory: [],
   },
 };
@@ -25,8 +25,7 @@ export const deleteDataPost = createAsyncThunk(
   "post/deleteDataPost",
   async (payload, { dispatch }) => {
     const res = await http.delete(`/wp/v2/posts/${payload}`);
-    dispatch(fetchDataPost(res.data.author));
-    return payload;
+    await dispatch(fetchDataPost(res.data.author));
   }
 );
 
@@ -43,13 +42,8 @@ export const fetchDataCategory = createAsyncThunk(
 export const deleteCategoryByID = createAsyncThunk(
   "post/deleteCategoryByID",
   async (payload, { dispatch }) => {
-    await http
-      .delete(`/wp/v2/categories/${payload}?force=true`)
-      .then((resp) => {
-        dispatch(fetchDataCategory(resp.data.author));
-      })
-      .catch((error) => console.log(error));
-    return payload;
+    const res = await http.delete(`/wp/v2/categories/${payload}?force=true`);
+    await dispatch(fetchDataCategory(res.data.author));
   }
 );
 
@@ -99,9 +93,6 @@ export const postSlice = createSlice({
       })
       .addCase(deleteDataPost.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.posts.listPost = state.posts.listPost.filter(
-          (item) => item.id !== action.payload
-        );
       });
 
     builer
@@ -110,15 +101,12 @@ export const postSlice = createSlice({
       })
       .addCase(deleteCategoryByID.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.category.listCategory = state.category.listCategory.filter(
-          (item) => item.id !== action.payload
-        );
       });
 
     builer
       .addCase(getCategoryByID.pending, (state, action) => {})
       .addCase(getCategoryByID.fulfilled, (state, action) => {
-        state.category.itemCateogry = action.payload
+        state.category.itemCateogry = action.payload;
       });
   },
 });
@@ -128,6 +116,6 @@ export const { deleteCateByID } = postSlice.actions;
 // Selector
 export const selectListPost = (state) => state.post.posts.listPost;
 export const selectListCate = (state) => state.post.category.listCategory;
-export const selectItemCate = (state) => state.post.category.itemCateogry
+export const selectItemCate = (state) => state.post.category.itemCateogry;
 
 export default postSlice.reducer;
