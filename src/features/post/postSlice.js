@@ -60,6 +60,17 @@ export const getCategoryByID = createAsyncThunk(
   }
 );
 
+export const updateCategory = createAsyncThunk(
+  "post/updateCategory",
+  async (payload) => {
+    const { id, name, slug } = payload;
+    const searchParams = new URLSearchParams();
+    searchParams.set("name", name);
+    searchParams.set("slug", slug);
+    await http.put(`/wp/v2/categories/${id}?${searchParams.toString()}`);
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -108,7 +119,9 @@ export const postSlice = createSlice({
       });
 
     builer
-      .addCase(getCategoryByID.pending, (state, action) => {})
+      .addCase(getCategoryByID.pending, (state, action) => {
+        state.category.itemCateogry = "";
+      })
       .addCase(getCategoryByID.fulfilled, (state, action) => {
         state.category.itemCateogry = action.payload;
       });

@@ -6,10 +6,6 @@ import { deleteCategoryByID } from "../../../features/post/postSlice";
 export default function ItemCate(props) {
   const dispatch = useDispatch();
 
-  const getValue = (idCate) => {
-    console.log(idCate);
-  };
-
   const { id, slug, name } = props.data;
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
@@ -53,8 +49,7 @@ export default function ItemCate(props) {
             </svg>
           </NavLink>
           <NavLink
-            to={`./${id}`}
-            onClick={() => getValue(id)}
+            to={`./edit/${id}`}
             className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
           >
             <svg
