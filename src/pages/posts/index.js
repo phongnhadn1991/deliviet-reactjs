@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ItemPost from "../../components/Posts/ItemPost/ItemPost";
 import { getProfileFromLS } from "../../features/authentication/authenSlice";
-import { fetchDataPost, selectListPost, deleteDataPost } from "../../features/post/postSlice";
-import ItemPost from "../../components/ItemPost/ItemPost";
+import { fetchDataPost, selectListPost } from "../../features/post/postSlice";
+
+
 
 export default function PostPage() {
   const listPost = useSelector(selectListPost);

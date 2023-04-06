@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
-import { deleteDataPost } from "../../features/post/postSlice";
+import { NavLink } from "react-router-dom";
+import { deleteDataPost } from "../../../features/post/postSlice";
 
 export default function ItemPost(props) {
   const { id, title, status, _embedded } = props.item;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left">
@@ -42,7 +43,10 @@ export default function ItemPost(props) {
       </td>
       <td className="py-3 px-6 text-center">
         <div className="flex item-center justify-center">
-          <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+          <NavLink
+            to={`./${id}`}
+            className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -62,7 +66,7 @@ export default function ItemPost(props) {
                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
               />
             </svg>
-          </div>
+          </NavLink>
           <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
             <svg
               xmlns="http://www.w3.org/2000/svg"
