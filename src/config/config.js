@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "http://localhost/wp-json/",
+  baseURL: "https://deliviet.mcntestsv.ga/wp-json/",
   headers: {
     "Content-Type": "application/json"
   }
