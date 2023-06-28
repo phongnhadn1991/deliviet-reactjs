@@ -37,8 +37,8 @@ export const clearLS = () => {
 export const fetchTokenLogin = createAsyncThunk(
   "post/fetchTokenLogin",
   async (payload) => {
-    const res = await http.post("/api/v1/token", payload)
-    return res.data.jwt_token
+    const res = await http.post("/jwt-auth/v1/token", payload)
+    return res.data.token
   }
 );
 
@@ -58,7 +58,7 @@ export const authenSlice = createSlice({
         const jwt_token = action.payload
         setAccessTokenToLS(jwt_token)
 
-        http.get("/wp/v2/users/me")
+        http.get("/custom-api/v1/me")
           .then((res) => setProfileToLS(res.data))
           .catch(error => console.log(error))
         state.profileUser = getProfileFromLS();
