@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "https://deliviet.ngoan.online/wp-json/",
+  baseURL: "https://deliviet.ngoan.online/wp-json",
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   }
 });
 
@@ -11,15 +11,18 @@ const http = axios.create({
 http.interceptors.request.use(
   async config => {
     config.headers = {
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       'Accept': 'application/json',
+    };
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
   error => {
-    Promise.reject(error)
-  });
-
+    return Promise.reject(error);
+  }
+);
 // Response interceptor for API calls
 http.interceptors.response.use((response) => {
   return response
